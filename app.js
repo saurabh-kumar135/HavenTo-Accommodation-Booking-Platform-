@@ -9,7 +9,7 @@ const MongoDBStore = require('connect-mongodb-session')(session);
 const { default: mongoose } = require('mongoose');
 const multer = require('multer');
 const cors = require('cors');
-const DB_PATH =  "mongodb+srv://CRUDABC:CRUDABC@cluster1.vzxjvpm.mongodb.net/HavenTo?appName=cluster1";
+const DB_PATH = process.env.MONGODB_URI || "mongodb://localhost:27017/havento";
 
 //Local Module
 const storeRouter = require("./routes/storeRouter")
