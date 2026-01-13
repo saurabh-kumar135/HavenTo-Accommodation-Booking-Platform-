@@ -39,16 +39,40 @@ exports.getBookings = (req, res, next) => {
 };
 
 exports.getFavouriteList = async (req, res, next) => {
-  const userId = req.session.user._id;
-  const user = await User.findById(userId).populate('favourites');
-  res.json({
-    success: true,
-    favouriteHomes: user.favourites,
-    pageTitle: "My Favourites",
-    currentPage: "favourites",
-    isLoggedIn: req.isLoggedIn, 
-    user: req.session.user,
-  });
+  try {
+    // Check if user is logged in
+    if (!req.session.user || !req.session.user._id) {
+      return res.status(401).json({
+        success: false,
+        message: "Please login to view favorites"
+      });
+    }
+
+    const userId = req.session.user._id;
+    const user = await User.findById(userId).populate('favourites');
+    
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found"
+      });
+    }
+    
+    res.json({
+      success: true,
+      favouriteHomes: user.favourites || [],
+      pageTitle: "My Favourites",
+      currentPage: "favourites",
+      isLoggedIn: req.isLoggedIn, 
+      user: req.session.user,
+    });
+  } catch (error) {
+    console.error('Get favourites error:', error);
+    res.status(500).json({
+      success: false,
+      message: "Failed to load favourites"
+    });
+  }
 };
 
 exports.postAddToFavourite = async (req, res, next) => {
