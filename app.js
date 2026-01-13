@@ -96,10 +96,16 @@ app.use("/host/uploads", express.static(path.join(rootDir, 'uploads')))
 app.use("/homes/uploads", express.static(path.join(rootDir, 'uploads')))
 
 app.use(session({
-  secret: "KnowledgeGate AI with Complete Coding",
+  secret: process.env.SESSION_SECRET || "KnowledgeGate AI with Complete Coding",
   resave: false,
-  saveUninitialized: true,
-  store
+  saveUninitialized: false,
+  store,
+  cookie: {
+    maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production', // true in production (HTTPS)
+    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax' // 'none' for cross-origin
+  }
 }));
 
 

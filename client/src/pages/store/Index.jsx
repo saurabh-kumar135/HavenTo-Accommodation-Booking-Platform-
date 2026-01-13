@@ -64,10 +64,19 @@ const Index = () => {
 
   const handleAddFavourite = async (homeId) => {
     try {
-      await addToFavourite(homeId);
-      navigate('/favourites');
+      const response = await addToFavourite(homeId);
+      if (response.data.success) {
+        alert('Added to favourites!');
+        // Optionally refresh the homes list or update UI
+      }
     } catch (error) {
       console.error('Error adding to favourites:', error);
+      if (error.response?.status === 401) {
+        alert('Please login to add favorites');
+        navigate('/login');
+      } else {
+        alert('Failed to add to favourites');
+      }
     }
   };
 
