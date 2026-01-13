@@ -52,31 +52,81 @@ exports.getFavouriteList = async (req, res, next) => {
 };
 
 exports.postAddToFavourite = async (req, res, next) => {
-  const homeId = req.body.id;
-  const userId = req.session.user._id;
-  const user = await User.findById(userId);
-  if (!user.favourites.includes(homeId)) {
-    user.favourites.push(homeId);
-    await user.save();
+  try {
+    // Check if user is logged in
+    if (!req.session.user || !req.session.user._id) {
+      return res.status(401).json({
+        success: false,
+        message: "Please login to add favorites"
+      });
+    }
+
+    const homeId = req.body.id;
+    const userId = req.session.user._id;
+    const user = await User.findById(userId);
+    
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found"
+      });
+    }
+    
+    if (!user.favourites.includes(homeId)) {
+      user.favourites.push(homeId);
+      await user.save();
+    }
+    
+    res.json({
+      success: true,
+      message: "Added to favourites",
+    });
+  } catch (error) {
+    console.error('Add to favourites error:', error);
+    res.status(500).json({
+      success: false,
+      message: "Failed to add to favourites"
+    });
   }
-  res.json({
-    success: true,
-    message: "Added to favourites",
-  });
 };
 
 exports.postRemoveFromFavourite = async (req, res, next) => {
-  const homeId = req.params.homeId;
-  const userId = req.session.user._id;
-  const user = await User.findById(userId);
-  if (user.favourites.includes(homeId)) {
-    user.favourites = user.favourites.filter(fav => fav != homeId);
-    await user.save();
+  try {
+    // Check if user is logged in
+    if (!req.session.user || !req.session.user._id) {
+      return res.status(401).json({
+        success: false,
+        message: "Please login to remove favorites"
+      });
+    }
+
+    const homeId = req.params.homeId;
+    const userId = req.session.user._id;
+    const user = await User.findById(userId);
+    
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found"
+      });
+    }
+    
+    if (user.favourites.includes(homeId)) {
+      user.favourites = user.favourites.filter(fav => fav != homeId);
+      await user.save();
+    }
+    
+    res.json({
+      success: true,
+      message: "Removed from favourites",
+    });
+  } catch (error) {
+    console.error('Remove from favourites error:', error);
+    res.status(500).json({
+      success: false,
+      message: "Failed to remove from favourites"
+    });
   }
-  res.json({
-    success: true,
-    message: "Removed from favourites",
-  });
 };
 
 exports.getHomeDetails = (req, res, next) => {
