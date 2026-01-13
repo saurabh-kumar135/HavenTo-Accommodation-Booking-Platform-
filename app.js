@@ -107,23 +107,6 @@ app.use((req, res, next) => {
 
 app.use('/api/', apiLimiter);
 
-app.get('/test-smtp', async (req, res) => {
-  const transporter = nodemailer.createTransporter({
-    service: 'gmail',
-    auth: {
-      user: process.env.GMAIL_USER,
-      pass: process.env.GMAIL_APP_PASSWORD
-    }
-  });
-  
-  try {
-    await transporter.verify();
-    res.json({ success: true, message: '✅ SMTP is working on Render!' });
-  } catch (error) {
-    res.json({ success: false, message: '❌ SMTP blocked on Render', error: error.message, code: error.code });
-  }
-});
-
 app.use(authRouter);
 app.use('/api/password-reset', passwordResetRouter);
 app.use('/api/verify-email', emailVerificationRouter);
