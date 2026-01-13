@@ -124,13 +124,13 @@ const sendPasswordResetEmail = async (email, resetToken, firstName) => {
   try {
     await sgMail.send(mailOptions);
     console.log(`✅ Password reset email sent successfully to ${email}`);
-    return true;
+    return { success: true };
   } catch (error) {
     console.error('❌ Error sending password reset email:', error.message);
     if (error.response) {
       console.error('SendGrid error details:', error.response.body);
     }
-    throw error;
+    return { success: false, error: error.message };
   }
 };
 
