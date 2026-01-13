@@ -15,8 +15,7 @@ const storeRouter = require("./routes/storeRouter")
 const hostRouter = require("./routes/hostRouter")
 const authRouter = require("./routes/authRouter")
 const passwordResetRouter = require("./routes/passwordResetRoutes")
-const emailVerificationRouter = require("./routes/emailVerificationRoutes")
-const phoneVerificationRouter = require("./routes/phoneVerificationRoutes") 
+const emailVerificationRouter = require("./routes/emailVerificationRoutes") 
 const rootDir = require("./utils/pathUtil");
 const errorsController = require("./controllers/errors");
 const { apiLimiter } = require('./middleware/rateLimiter');
@@ -110,7 +109,7 @@ app.use('/api/', apiLimiter);
 app.use(authRouter);
 app.use('/api/password-reset', passwordResetRouter);
 app.use('/api/verify-email', emailVerificationRouter);
-app.use('/api/verify-phone', phoneVerificationRouter); 
+ 
 app.use(storeRouter);
 app.use(hostRouter);
 
