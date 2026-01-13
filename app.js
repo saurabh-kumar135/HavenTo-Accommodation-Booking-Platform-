@@ -9,6 +9,7 @@ const { default: mongoose } = require('mongoose');
 const multer = require('multer');
 const cors = require('cors');
 const helmet = require('helmet');
+const nodemailer = require('nodemailer');
 const DB_PATH = process.env.MONGODB_URI || "mongodb://localhost:27017/havento";
 
 const storeRouter = require("./routes/storeRouter")
