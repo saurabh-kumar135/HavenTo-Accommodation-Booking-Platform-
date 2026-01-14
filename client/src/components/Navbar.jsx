@@ -162,31 +162,38 @@ const Navbar = ({ currentPage }) => {
               <ul className="flex flex-col space-y-1 border-t border-[#C4A57B] pt-2 mt-2">
                 {isLoggedIn ? (
                   <>
-                    <li>
-                      <Link to="/homes" className={`${currentPage === 'Home' ? 'bg-[#A67C52] font-medium' : 'hover:bg-[#C4A57B]'} py-2 px-3 rounded-lg flex items-center`}>
-                        Homes-List
-                      </Link>
-                    </li>
-                    <li>
-                      <Link to="/favourites" className={`${currentPage === 'favourites' ? 'bg-[#A67C52] font-medium' : 'hover:bg-[#C4A57B]'} py-2 px-3 rounded-lg flex items-center`}>
-                        Favourites
-                      </Link>
-                    </li>
-                    <li>
-                      <Link to="/bookings" className={`${currentPage === 'bookings' ? 'bg-[#A67C52] font-medium' : 'hover:bg-[#C4A57B]'} py-2 px-3 rounded-lg flex items-center`}>
-                        Bookings
-                      </Link>
-                    </li>
-                    <li>
-                      <Link to="/host/host-home-list" className={`${currentPage === 'host-homes' ? 'bg-[#A67C52] font-medium' : 'hover:bg-[#C4A57B]'} py-2 px-3 rounded-lg flex items-center`}>
-                        Host Homes
-                      </Link>
-                    </li>
-                    <li>
-                      <Link to="/host/add-home" className={`${currentPage === 'addHome' ? 'bg-[#A67C52] font-medium' : 'hover:bg-[#C4A57B]'} py-2 px-3 rounded-lg flex items-center`}>
-                        Add Home
-                      </Link>
-                    </li>
+                    {user && user.userType === 'guest' ? (
+                      <>
+                        <li>
+                          <Link to="/homes" className={`${currentPage === 'Home' ? 'bg-[#A67C52] font-medium' : 'hover:bg-[#C4A57B]'} py-2 px-3 rounded-lg flex items-center`}>
+                            Homes-List
+                          </Link>
+                        </li>
+                        <li>
+                          <Link to="/favourites" className={`${currentPage === 'favourites' ? 'bg-[#A67C52] font-medium' : 'hover:bg-[#C4A57B]'} py-2 px-3 rounded-lg flex items-center`}>
+                            Favourites
+                          </Link>
+                        </li>
+                        <li>
+                          <Link to="/bookings" className={`${currentPage === 'bookings' ? 'bg-[#A67C52] font-medium' : 'hover:bg-[#C4A57B]'} py-2 px-3 rounded-lg flex items-center`}>
+                            Bookings
+                          </Link>
+                        </li>
+                      </>
+                    ) : (
+                      <>
+                        <li>
+                          <Link to="/host/host-home-list" className={`${currentPage === 'host-homes' ? 'bg-[#A67C52] font-medium' : 'hover:bg-[#C4A57B]'} py-2 px-3 rounded-lg flex items-center`}>
+                            Host Homes
+                          </Link>
+                        </li>
+                        <li>
+                          <Link to="/host/add-home" className={`${currentPage === 'addHome' ? 'bg-[#A67C52] font-medium' : 'hover:bg-[#C4A57B]'} py-2 px-3 rounded-lg flex items-center`}>
+                            Add Home
+                          </Link>
+                        </li>
+                      </>
+                    )}
                     <li className="pt-2 border-t border-[#C4A57B] mt-2">
                       <button onClick={handleLogout} className="hover:bg-[#C4A57B] py-2 px-3 rounded-lg w-full text-left flex items-center">
                         Logout
