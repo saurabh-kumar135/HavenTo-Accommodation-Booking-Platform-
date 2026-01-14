@@ -110,7 +110,7 @@ const sendPasswordResetEmail = async (email, resetToken, firstName) => {
       name: 'HavenTo'
     },
     replyTo: process.env.SENDGRID_FROM_EMAIL || 'noreply@havento.com',
-    subject: 'HavenTo - Password Reset Request',
+    subject: 'Reset your HavenTo password',
     text: `Hi ${firstName || 'there'},
 
 We received a request to reset your password for your HavenTo account.
