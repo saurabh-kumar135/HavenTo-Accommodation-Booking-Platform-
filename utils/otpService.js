@@ -110,7 +110,7 @@ const sendPasswordResetEmail = async (email, resetToken, firstName) => {
       name: 'HavenTo'
     },
     replyTo: process.env.SENDGRID_FROM_EMAIL || 'noreply@havento.com',
-    subject: 'Reset your HavenTo password',
+    subject: 'HavenTo - Password Reset Request',
     text: `Hi ${firstName || 'there'},
 
 We received a request to reset your password for your HavenTo account.
@@ -161,19 +161,24 @@ The HavenTo Team
           <div class="content">
             <p>Hi ${firstName || 'there'},</p>
             <p>We received a request to reset your password for your HavenTo account.</p>
-            <p>Click the button below to reset your password:</p>
+            
+            <div style="background: #fff3cd; border-left: 4px solid #ffc107; padding: 15px; margin: 20px 0; border-radius: 4px;">
+              <p style="margin: 0; color: #856404;"><strong>🔒 Security Notice:</strong> This is a legitimate password reset email from HavenTo.</p>
+            </div>
+            
+            <p>Click the button below to create a new password:</p>
             
             <div style="text-align: center;">
-              <a href="${resetLink}" class="button">Reset Password</a>
+              <a href="${resetLink}" class="button" style="background: #667eea; color: white; text-decoration: none; padding: 15px 30px; border-radius: 5px; display: inline-block; font-weight: 600;">Reset My Password</a>
             </div>
             
-            <p>Or copy and paste this link into your browser:</p>
+            <p style="margin-top: 25px;">Or copy this secure link:</p>
             <div class="link-box">
-              <a href="${resetLink}" style="color: #667eea; text-decoration: none;">${resetLink}</a>
+              <a href="${resetLink}" style="color: #667eea; text-decoration: none; word-break: break-all;">${resetLink}</a>
             </div>
             
-            <p><strong>This link will expire in 1 hour.</strong></p>
-            <p>If you didn't request a password reset, you can safely ignore this email.</p>
+            <p><strong>⏰ This link expires in 1 hour</strong> for your security.</p>
+            <p>If you didn't request this password reset, you can safely ignore this email. Your password will not be changed.</p>
             
             <div class="footer">
               <p>© 2024 HavenTo. All rights reserved.</p>
